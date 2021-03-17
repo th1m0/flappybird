@@ -16,5 +16,21 @@ namespace Flappy_Bird
         {
             InitializeComponent();
         }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            // HOME SCREEN START BUTTON CLICK EVENT
+            Mainscreenpanel.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // HOME SCREEN LEADERBOARD BUTTON CLICK EVENT
+        }
+
+        private void mainscreenpanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
