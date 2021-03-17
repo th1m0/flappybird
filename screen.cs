@@ -15,6 +15,9 @@ namespace Flappy_Bird
         public screen()
         {
             InitializeComponent();
+            //Mainscreenpanel.Visible = true;
+            //Mainscreenpanel.BringToFront();
+
         }
 
         private void StartButton_Click(object sender, EventArgs e)

@@ -87,5 +87,8 @@
   <ItemGroup>
     <None Include="images\mainscreen2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="images\leaderboardscreen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
