@@ -45,8 +45,8 @@
             // 
             // LeaderBoardPanel
             // 
-            this.LeaderBoardPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.LeaderBoardPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LeaderBoardPanel.BackgroundImage = global::Flappy_Bird.Properties.Resources.leaderboardscreen;
             this.LeaderBoardPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -56,17 +56,17 @@
             this.LeaderBoardPanel.Name = "LeaderBoardPanel";
             this.LeaderBoardPanel.Size = new System.Drawing.Size(935, 562);
             this.LeaderBoardPanel.TabIndex = 1;
+            this.LeaderBoardPanel.Visible = false;
+            this.LeaderBoardPanel.VisibleChanged += new System.EventHandler(this.LeaderBoardPanel_VisibleChanged);
             this.LeaderBoardPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainscreenpanel_Paint);
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(136)))), ((int)(((byte)(238)))));
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Tahoma", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(307, 83);
+            this.textBox1.Location = new System.Drawing.Point(332, 53);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(342, 39);
             this.textBox1.TabIndex = 1;
@@ -75,16 +75,14 @@
             // 
             // TopTenTable
             // 
-            this.TopTenTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TopTenTable.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.TopTenTable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.TopTenTable.ColumnCount = 2;
-            this.TopTenTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.TopTenTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.TopTenTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TopTenTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TopTenTable.Controls.Add(this.textBox3, 1, 0);
             this.TopTenTable.Controls.Add(this.textBox2, 0, 0);
-            this.TopTenTable.Location = new System.Drawing.Point(307, 128);
+            this.TopTenTable.Location = new System.Drawing.Point(182, 98);
             this.TopTenTable.Name = "TopTenTable";
             this.TopTenTable.RowCount = 11;
             this.TopTenTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090908F));
@@ -98,17 +96,17 @@
             this.TopTenTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090908F));
             this.TopTenTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090908F));
             this.TopTenTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090908F));
-            this.TopTenTable.Size = new System.Drawing.Size(342, 328);
+            this.TopTenTable.Size = new System.Drawing.Size(622, 403);
             this.TopTenTable.TabIndex = 0;
             // 
             // textBox3
             // 
             this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.textBox3.Location = new System.Drawing.Point(225, 3);
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(314, 3);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(114, 23);
+            this.textBox3.Size = new System.Drawing.Size(305, 23);
             this.textBox3.TabIndex = 1;
             this.textBox3.Text = "Score";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -118,22 +116,22 @@
             this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox2.CausesValidation = false;
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox2.HideSelection = false;
             this.textBox2.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.textBox2.Location = new System.Drawing.Point(3, 3);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.ShortcutsEnabled = false;
-            this.textBox2.Size = new System.Drawing.Size(216, 23);
+            this.textBox2.Size = new System.Drawing.Size(305, 23);
             this.textBox2.TabIndex = 0;
             this.textBox2.Text = "Name";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Mainscreenpanel
             // 
-            this.Mainscreenpanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.Mainscreenpanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Mainscreenpanel.BackgroundImage = global::Flappy_Bird.Properties.Resources.mainscreen21;
             this.Mainscreenpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -172,7 +170,7 @@
             this.MainscreenLeaderboardButton.TabIndex = 3;
             this.MainscreenLeaderboardButton.Text = "Leaderboard";
             this.MainscreenLeaderboardButton.UseVisualStyleBackColor = false;
-            this.MainscreenLeaderboardButton.Click += new System.EventHandler(this.button2_Click);
+            this.MainscreenLeaderboardButton.Click += new System.EventHandler(this.showLeaderBoard);
             // 
             // MainscreenStartButton
             // 
