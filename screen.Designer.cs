@@ -33,6 +33,7 @@
             this.TopTenTable = new System.Windows.Forms.TableLayoutPanel();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.TopTenBackButton = new System.Windows.Forms.Button();
             this.Mainscreenpanel = new System.Windows.Forms.Panel();
             this.MainscreenButtons = new System.Windows.Forms.TableLayoutPanel();
             this.MainscreenLeaderboardButton = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             this.LeaderBoardPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.LeaderBoardPanel.Controls.Add(this.textBox1);
             this.LeaderBoardPanel.Controls.Add(this.TopTenTable);
+            this.LeaderBoardPanel.Controls.Add(this.TopTenBackButton);
             this.LeaderBoardPanel.Location = new System.Drawing.Point(0, 0);
             this.LeaderBoardPanel.Name = "LeaderBoardPanel";
             this.LeaderBoardPanel.Size = new System.Drawing.Size(935, 562);
@@ -127,6 +129,20 @@
             this.textBox2.TabIndex = 0;
             this.textBox2.Text = "Name";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // TopTenBackButton
+            // 
+            this.TopTenBackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.TopTenBackButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.TopTenBackButton.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TopTenBackButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.TopTenBackButton.Location = new System.Drawing.Point(406, 507);
+            this.TopTenBackButton.Name = "TopTenBackButton";
+            this.TopTenBackButton.Size = new System.Drawing.Size(178, 50);
+            this.TopTenBackButton.TabIndex = 0;
+            this.TopTenBackButton.Text = "Back";
+            this.TopTenBackButton.UseVisualStyleBackColor = false;
+            this.TopTenBackButton.Click += new System.EventHandler(this.TopTenBackButton_Click);
             // 
             // Mainscreenpanel
             // 
@@ -215,6 +231,7 @@
         private System.Windows.Forms.TableLayoutPanel MainscreenButtons;
         private System.Windows.Forms.Button MainscreenLeaderboardButton;
         private System.Windows.Forms.Button MainscreenStartButton;
+        private System.Windows.Forms.Button TopTenBackButton;
         private System.Windows.Forms.Panel Mainscreenpanel;
         private System.Windows.Forms.Panel LeaderBoardPanel;
         private System.Windows.Forms.TableLayoutPanel TopTenTable;

@@ -81,5 +81,15 @@ namespace Flappy_Bird
                 TopTenTable.Controls.Add(topTenBox($"{response.data[i].score}"));
             }
         }
+
+        private void TopTenBackButton_Click(object sender, EventArgs e)
+        {
+            // TOPTEN BACK BUTTON
+            LeaderBoardPanel.Visible = false;
+            TopTenTable.Controls.Clear();
+            Mainscreenpanel.Visible = true;
+            Mainscreenpanel.BringToFront();
+            LeaderBoardPanel.SendToBack();
+        }
     }
 }
