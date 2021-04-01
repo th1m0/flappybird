@@ -15,12 +15,15 @@ namespace Flappy_Bird
     public partial class screen : Form
     {
         private bool local = false;
+        int pipeSpeed = 15;
+        int gravity = 15;
+        int score = 0;
         public screen()
         {
             InitializeComponent();
             Mainscreenpanel.Visible = true;
             Mainscreenpanel.BringToFront();
-
+            KeyPreview = true;
         }
 
         static TextBox topTenBox(string text)
@@ -31,7 +34,7 @@ namespace Flappy_Bird
                 BorderStyle = BorderStyle.None,
                 Font = new Font("Microsoft Sans Serif", 15F),
                 Location = new Point(3, 39),
-                Name = "textBox4",
+                Name = "TopTenTxtBox",
                 ReadOnly = true,
                 ShortcutsEnabled = false,
                 Size = new Size(398, 23),
@@ -45,8 +48,13 @@ namespace Flappy_Bird
         private void StartButton_Click(object sender, EventArgs e)
         {
             // HOME SCREEN START BUTTON CLICK EVENT
+            if (FlappyGamePanel.Visible)
+            {
+                return;
+            }
             Mainscreenpanel.Visible = false;
-
+            FlappyGamePanel.Visible = true;
+            startGame();
         }
 
         private void showLeaderBoard(object sender, EventArgs e)
@@ -90,6 +98,55 @@ namespace Flappy_Bird
             Mainscreenpanel.Visible = true;
             Mainscreenpanel.BringToFront();
             LeaderBoardPanel.SendToBack();
+        }
+
+        private void FlappyTimerEvent(object sender, EventArgs e)
+        {
+            Flappy.Top += gravity;
+            PipeBottom.Left -= pipeSpeed;
+            PipeTop.Left -= pipeSpeed;
+            ScoreLabel.Text = $"Score: {score}";
+            if (PipeBottom.Left < -150)
+            {
+                PipeBottom.Left = 800;
+            }
+            if (PipeBottom.Left < -180)
+            {
+                PipeBottom.Left = 950;
+            }
+
+            if (Flappy.Bounds.IntersectsWith(PipeTop.Bounds) || Flappy.Bounds.IntersectsWith(PipeBottom.Bounds) || Flappy.Bounds.IntersectsWith(groundPictureBox.Bounds))
+            {
+                stopGame();
+            }
+        }
+
+        private void KeyDownEvent(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                gravity = -15;
+            }
+
+        }
+
+        private void KeyUpEvent(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                gravity = 15;
+            }
+        }
+
+        void startGame()
+        {
+            Timer.Start();
+            Form.ActiveForm.Select();
+        }
+
+        void stopGame()
+        {
+            Timer.Stop();
         }
     }
 }
