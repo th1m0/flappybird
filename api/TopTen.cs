@@ -18,4 +18,10 @@ namespace Flappy_Bird.api
         public int amount { get; set; }
         public List<TopTen> data { get; set; }
     }
+
+    class IsTopTen
+    {
+        public int success { get; set; }
+        public int place { get; set; }
+    }
 }

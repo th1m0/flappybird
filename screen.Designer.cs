@@ -40,6 +40,14 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.TopTenBackButton = new System.Windows.Forms.Button();
             this.Timer = new System.Windows.Forms.Timer(this.components);
+            this.FlappyGamePanel = new Flappy_Bird.GamePanel();
+            this.AirPictureBox = new System.Windows.Forms.PictureBox();
+            this.collitionBox = new System.Windows.Forms.PictureBox();
+            this.groundPictureBox = new System.Windows.Forms.PictureBox();
+            this.ScoreLabel = new System.Windows.Forms.Label();
+            this.PipeBottom = new System.Windows.Forms.PictureBox();
+            this.Flappy = new System.Windows.Forms.PictureBox();
+            this.PipeTop = new System.Windows.Forms.PictureBox();
             this.DiedPanel = new Flappy_Bird.GamePanel();
             this.DiedLeaderBoardButton = new System.Windows.Forms.Button();
             this.DiedMainMenuButton = new System.Windows.Forms.Button();
@@ -54,25 +62,19 @@
             this.HighScoreReachedPlace = new System.Windows.Forms.Label();
             this.HighScoreReachedScore = new System.Windows.Forms.Label();
             this.HighScoreReachedHeader = new System.Windows.Forms.Label();
-            this.FlappyGamePanel = new Flappy_Bird.GamePanel();
-            this.collitionBox = new System.Windows.Forms.PictureBox();
-            this.groundPictureBox = new System.Windows.Forms.PictureBox();
-            this.ScoreLabel = new System.Windows.Forms.Label();
-            this.PipeBottom = new System.Windows.Forms.PictureBox();
-            this.Flappy = new System.Windows.Forms.PictureBox();
-            this.PipeTop = new System.Windows.Forms.PictureBox();
             this.Mainscreenpanel.SuspendLayout();
             this.MainscreenButtons.SuspendLayout();
             this.LeaderBoardPanel.SuspendLayout();
             this.TopTenTable.SuspendLayout();
-            this.DiedPanel.SuspendLayout();
-            this.highScoreReachedpanel.SuspendLayout();
             this.FlappyGamePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AirPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.collitionBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groundPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PipeBottom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flappy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PipeTop)).BeginInit();
+            this.DiedPanel.SuspendLayout();
+            this.highScoreReachedpanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Mainscreenpanel
@@ -237,6 +239,110 @@
             this.Timer.Interval = 10;
             this.Timer.Tick += new System.EventHandler(this.FlappyTimerEvent);
             // 
+            // FlappyGamePanel
+            // 
+            this.FlappyGamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FlappyGamePanel.BackgroundImage = global::Flappy_Bird.Properties.Resources.leaderboardscreen;
+            this.FlappyGamePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.FlappyGamePanel.Controls.Add(this.AirPictureBox);
+            this.FlappyGamePanel.Controls.Add(this.collitionBox);
+            this.FlappyGamePanel.Controls.Add(this.groundPictureBox);
+            this.FlappyGamePanel.Controls.Add(this.ScoreLabel);
+            this.FlappyGamePanel.Controls.Add(this.PipeBottom);
+            this.FlappyGamePanel.Controls.Add(this.Flappy);
+            this.FlappyGamePanel.Controls.Add(this.PipeTop);
+            this.FlappyGamePanel.Location = new System.Drawing.Point(0, 0);
+            this.FlappyGamePanel.Name = "FlappyGamePanel";
+            this.FlappyGamePanel.Size = new System.Drawing.Size(1055, 562);
+            this.FlappyGamePanel.TabIndex = 1;
+            this.FlappyGamePanel.Visible = false;
+            // 
+            // AirPictureBox
+            // 
+            this.AirPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AirPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.AirPictureBox.Location = new System.Drawing.Point(0, -47);
+            this.AirPictureBox.Name = "AirPictureBox";
+            this.AirPictureBox.Size = new System.Drawing.Size(935, 46);
+            this.AirPictureBox.TabIndex = 7;
+            this.AirPictureBox.TabStop = false;
+            // 
+            // collitionBox
+            // 
+            this.collitionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.collitionBox.BackColor = System.Drawing.Color.Transparent;
+            this.collitionBox.Location = new System.Drawing.Point(805, 0);
+            this.collitionBox.Name = "collitionBox";
+            this.collitionBox.Size = new System.Drawing.Size(10, 512);
+            this.collitionBox.TabIndex = 6;
+            this.collitionBox.TabStop = false;
+            this.collitionBox.Tag = "movable";
+            // 
+            // groundPictureBox
+            // 
+            this.groundPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groundPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.groundPictureBox.Location = new System.Drawing.Point(0, 497);
+            this.groundPictureBox.Name = "groundPictureBox";
+            this.groundPictureBox.Size = new System.Drawing.Size(935, 65);
+            this.groundPictureBox.TabIndex = 5;
+            this.groundPictureBox.TabStop = false;
+            // 
+            // ScoreLabel
+            // 
+            this.ScoreLabel.AutoSize = true;
+            this.ScoreLabel.BackColor = System.Drawing.Color.Transparent;
+            this.ScoreLabel.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScoreLabel.Location = new System.Drawing.Point(3, 2);
+            this.ScoreLabel.Name = "ScoreLabel";
+            this.ScoreLabel.Size = new System.Drawing.Size(210, 59);
+            this.ScoreLabel.TabIndex = 4;
+            this.ScoreLabel.Text = "Score: 0";
+            // 
+            // PipeBottom
+            // 
+            this.PipeBottom.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.PipeBottom.BackColor = System.Drawing.Color.Transparent;
+            this.PipeBottom.Image = global::Flappy_Bird.Properties.Resources.pipe;
+            this.PipeBottom.Location = new System.Drawing.Point(674, 343);
+            this.PipeBottom.Name = "PipeBottom";
+            this.PipeBottom.Size = new System.Drawing.Size(141, 155);
+            this.PipeBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PipeBottom.TabIndex = 3;
+            this.PipeBottom.TabStop = false;
+            this.PipeBottom.Tag = "movable";
+            // 
+            // Flappy
+            // 
+            this.Flappy.BackColor = System.Drawing.Color.Transparent;
+            this.Flappy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Flappy.ErrorImage = null;
+            this.Flappy.Image = global::Flappy_Bird.Properties.Resources.bird;
+            this.Flappy.InitialImage = null;
+            this.Flappy.Location = new System.Drawing.Point(170, 203);
+            this.Flappy.Name = "Flappy";
+            this.Flappy.Size = new System.Drawing.Size(80, 60);
+            this.Flappy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Flappy.TabIndex = 2;
+            this.Flappy.TabStop = false;
+            // 
+            // PipeTop
+            // 
+            this.PipeTop.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PipeTop.BackColor = System.Drawing.Color.Transparent;
+            this.PipeTop.Image = global::Flappy_Bird.Properties.Resources.pipedown;
+            this.PipeTop.Location = new System.Drawing.Point(674, 0);
+            this.PipeTop.Name = "PipeTop";
+            this.PipeTop.Size = new System.Drawing.Size(141, 150);
+            this.PipeTop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PipeTop.TabIndex = 0;
+            this.PipeTop.TabStop = false;
+            this.PipeTop.Tag = "movable";
+            // 
             // DiedPanel
             // 
             this.DiedPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -268,6 +374,7 @@
             this.DiedLeaderBoardButton.TabIndex = 6;
             this.DiedLeaderBoardButton.Text = "Leaderboard";
             this.DiedLeaderBoardButton.UseVisualStyleBackColor = false;
+            this.DiedLeaderBoardButton.Click += new System.EventHandler(this.showLeaderBoard);
             // 
             // DiedMainMenuButton
             // 
@@ -281,6 +388,7 @@
             this.DiedMainMenuButton.TabIndex = 5;
             this.DiedMainMenuButton.Text = "Main menu";
             this.DiedMainMenuButton.UseVisualStyleBackColor = false;
+            this.DiedMainMenuButton.Click += new System.EventHandler(this.DiedMainMenuButton_Click);
             // 
             // DiedCurrectScore
             // 
@@ -371,7 +479,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Send";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.saveHighScore);
             // 
             // HighScoreReachedName
             // 
@@ -416,98 +524,6 @@
             this.HighScoreReachedHeader.TabIndex = 0;
             this.HighScoreReachedHeader.Text = "You\'ve reached a highscore!";
             // 
-            // FlappyGamePanel
-            // 
-            this.FlappyGamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.FlappyGamePanel.BackgroundImage = global::Flappy_Bird.Properties.Resources.leaderboardscreen;
-            this.FlappyGamePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.FlappyGamePanel.Controls.Add(this.collitionBox);
-            this.FlappyGamePanel.Controls.Add(this.groundPictureBox);
-            this.FlappyGamePanel.Controls.Add(this.ScoreLabel);
-            this.FlappyGamePanel.Controls.Add(this.PipeBottom);
-            this.FlappyGamePanel.Controls.Add(this.Flappy);
-            this.FlappyGamePanel.Controls.Add(this.PipeTop);
-            this.FlappyGamePanel.Location = new System.Drawing.Point(0, 0);
-            this.FlappyGamePanel.Name = "FlappyGamePanel";
-            this.FlappyGamePanel.Size = new System.Drawing.Size(1055, 562);
-            this.FlappyGamePanel.TabIndex = 1;
-            this.FlappyGamePanel.Visible = false;
-            // 
-            // collitionBox
-            // 
-            this.collitionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.collitionBox.BackColor = System.Drawing.Color.Transparent;
-            this.collitionBox.Location = new System.Drawing.Point(805, 0);
-            this.collitionBox.Name = "collitionBox";
-            this.collitionBox.Size = new System.Drawing.Size(10, 512);
-            this.collitionBox.TabIndex = 6;
-            this.collitionBox.TabStop = false;
-            this.collitionBox.Tag = "movable";
-            // 
-            // groundPictureBox
-            // 
-            this.groundPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groundPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.groundPictureBox.Location = new System.Drawing.Point(0, 497);
-            this.groundPictureBox.Name = "groundPictureBox";
-            this.groundPictureBox.Size = new System.Drawing.Size(935, 65);
-            this.groundPictureBox.TabIndex = 5;
-            this.groundPictureBox.TabStop = false;
-            // 
-            // ScoreLabel
-            // 
-            this.ScoreLabel.AutoSize = true;
-            this.ScoreLabel.BackColor = System.Drawing.Color.Transparent;
-            this.ScoreLabel.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScoreLabel.Location = new System.Drawing.Point(3, 2);
-            this.ScoreLabel.Name = "ScoreLabel";
-            this.ScoreLabel.Size = new System.Drawing.Size(210, 59);
-            this.ScoreLabel.TabIndex = 4;
-            this.ScoreLabel.Text = "Score: 0";
-            // 
-            // PipeBottom
-            // 
-            this.PipeBottom.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.PipeBottom.BackColor = System.Drawing.Color.Transparent;
-            this.PipeBottom.Image = global::Flappy_Bird.Properties.Resources.pipe;
-            this.PipeBottom.Location = new System.Drawing.Point(674, 389);
-            this.PipeBottom.Name = "PipeBottom";
-            this.PipeBottom.Size = new System.Drawing.Size(141, 323);
-            this.PipeBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PipeBottom.TabIndex = 3;
-            this.PipeBottom.TabStop = false;
-            this.PipeBottom.Tag = "movable";
-            // 
-            // Flappy
-            // 
-            this.Flappy.BackColor = System.Drawing.Color.Transparent;
-            this.Flappy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Flappy.ErrorImage = null;
-            this.Flappy.Image = global::Flappy_Bird.Properties.Resources.bird;
-            this.Flappy.InitialImage = null;
-            this.Flappy.Location = new System.Drawing.Point(170, 203);
-            this.Flappy.Name = "Flappy";
-            this.Flappy.Size = new System.Drawing.Size(80, 60);
-            this.Flappy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Flappy.TabIndex = 2;
-            this.Flappy.TabStop = false;
-            // 
-            // PipeTop
-            // 
-            this.PipeTop.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PipeTop.BackColor = System.Drawing.Color.Transparent;
-            this.PipeTop.Image = global::Flappy_Bird.Properties.Resources.pipedown;
-            this.PipeTop.Location = new System.Drawing.Point(674, -140);
-            this.PipeTop.Name = "PipeTop";
-            this.PipeTop.Size = new System.Drawing.Size(141, 321);
-            this.PipeTop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PipeTop.TabIndex = 0;
-            this.PipeTop.TabStop = false;
-            this.PipeTop.Tag = "movable";
-            // 
             // screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -515,11 +531,11 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(934, 561);
+            this.Controls.Add(this.FlappyGamePanel);
+            this.Controls.Add(this.LeaderBoardPanel);
             this.Controls.Add(this.DiedPanel);
             this.Controls.Add(this.highScoreReachedpanel);
             this.Controls.Add(this.Mainscreenpanel);
-            this.Controls.Add(this.FlappyGamePanel);
-            this.Controls.Add(this.LeaderBoardPanel);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Name = "screen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -534,17 +550,18 @@
             this.LeaderBoardPanel.PerformLayout();
             this.TopTenTable.ResumeLayout(false);
             this.TopTenTable.PerformLayout();
-            this.DiedPanel.ResumeLayout(false);
-            this.DiedPanel.PerformLayout();
-            this.highScoreReachedpanel.ResumeLayout(false);
-            this.highScoreReachedpanel.PerformLayout();
             this.FlappyGamePanel.ResumeLayout(false);
             this.FlappyGamePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AirPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.collitionBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groundPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PipeBottom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flappy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PipeTop)).EndInit();
+            this.DiedPanel.ResumeLayout(false);
+            this.DiedPanel.PerformLayout();
+            this.highScoreReachedpanel.ResumeLayout(false);
+            this.highScoreReachedpanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -583,5 +600,6 @@
         private System.Windows.Forms.Label DiedCurrectScore;
         private System.Windows.Forms.Button DiedLeaderBoardButton;
         private System.Windows.Forms.Button DiedMainMenuButton;
+        private System.Windows.Forms.PictureBox AirPictureBox;
     }
 }

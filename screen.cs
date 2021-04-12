@@ -11,11 +11,12 @@ namespace Flappy_Bird
     {
         private bool local = false;
         static int pipeSpeed = 10;
-        static int gravity = 15;
+        static int gravity = 13;
         static int score = 0;
         static int lives = 3;
         static int ticks = 0;
-        int[] scores = new int[5];
+        int bottomYPipe = 0;
+        int[] scores = new int[3];
         Point flappyLocation = Point.Empty;
         Point pipeTopLocation = Point.Empty;
         Point pipeBottomLocation = Point.Empty;
@@ -24,10 +25,7 @@ namespace Flappy_Bird
         /**
          * 
          * TODO: 
-         * better pipe handling
-         * saving points
-         * fix "air" bug
-         * config
+         * 
          * presentation
          * 
          */
@@ -76,6 +74,12 @@ namespace Flappy_Bird
         {
             // HOME SCREEN LEADERBOARD BUTTON CLICK EVENT
             Mainscreenpanel.Visible = false;
+            if (DiedPanel.Visible)
+            {
+                DiedPanel.SendToBack();
+                DiedPanel.Visible = false;
+                FlappyGamePanel.Visible = false;
+            }
             LeaderBoardPanel.Visible = true;
             LeaderBoardPanel.BringToFront();
         }
@@ -117,32 +121,35 @@ namespace Flappy_Bird
 
         private void FlappyTimerEvent(object sender, EventArgs e)
         {
-            if (ticks == 50 * 2)
+            if (ticks >= 50 * 2 * 5 / (pipeSpeed / 2))
             {
                 PictureBox top = CreatePipeTop();
                 top.Left = FlappyGamePanel.Right;
                 PictureBox bottom = CreatePipeBottom();
                 bottom.Left = FlappyGamePanel.Right;
                 PictureBox box = CreateCollitionBox();
-                box.Left = FlappyGamePanel.Right;
+                box.Left = FlappyGamePanel.Right + 100;
+                box.Height = FlappyGamePanel.Height;
+                top.Height = new Random().Next(top.Height, (box.Height / 2) + 1 - 100);
+                int bottomHeightInc = new Random().Next(bottom.Height, (box.Height / 2) + 1 - 150) - bottom.Height;
+                bottom.Height = bottomHeightInc + bottom.Height;
+                bottom.Location = new Point(bottom.Location.X, bottom.Location.Y - bottomHeightInc);
                 FlappyGamePanel.Controls.Add(top);
                 FlappyGamePanel.Controls.Add(bottom);
                 FlappyGamePanel.Controls.Add(box);
-                Console.WriteLine("Now.");
+                Console.WriteLine("Now. Location bottom pipe: " + bottom.Location.Y + " " + bottom.Location.X + " inc: " + bottomHeightInc);
                 ticks = 0;
             }
             Flappy.Top += gravity;
-            /*PipeBottom.Left -= pipeSpeed;
-            PipeTop.Left -= pipeSpeed;
-            collitionBox.Left -= pipeSpeed;*/
-            if (flappyLocation == Point.Empty || pipeTopLocation == Point.Empty || pipeBottomLocation == Point.Empty || collitionBoxLocation == Point.Empty)
+            if (flappyLocation == Point.Empty || pipeTopLocation == Point.Empty || pipeBottomLocation == Point.Empty || collitionBoxLocation == Point.Empty || bottomYPipe == 0)
             {
                 flappyLocation = Flappy.Location;
                 pipeTopLocation = PipeTop.Location;
                 pipeBottomLocation = PipeBottom.Location;
                 collitionBoxLocation = collitionBox.Location;
+                bottomYPipe = PipeBottom.Location.Y;
             }
-            Console.WriteLine("Controls length: " + FlappyGamePanel.Controls.Count);
+
             for (int i = 0; i < FlappyGamePanel.Controls.Count; i++)
             {
                 if (FlappyGamePanel.Controls[i].Tag != null && FlappyGamePanel.Controls[i].Tag.ToString() == "movable")
@@ -159,8 +166,12 @@ namespace Flappy_Bird
                         score++;
                         ScoreLabel.Text = $"Score: {score}";
                         pipe.Visible = false;
+                        if (score % 5 == 0)
+                        {
+                            pipeSpeed += 3;
+                        }
                     }
-                    if (pipe.Name != "collitionBox" && Flappy.Bounds.IntersectsWith(pipe.Bounds) || Flappy.Bounds.IntersectsWith(groundPictureBox.Bounds))
+                    if (pipe.Name != "collitionBox" && Flappy.Bounds.IntersectsWith(pipe.Bounds) || Flappy.Bounds.IntersectsWith(groundPictureBox.Bounds) || Flappy.Bounds.IntersectsWith(AirPictureBox.Bounds))
                     {
                         Console.WriteLine("DIED.");
                         died();
@@ -178,7 +189,7 @@ namespace Flappy_Bird
         {
             if (e.KeyCode == Keys.Space)
             {
-                gravity = -15;
+                gravity = -13;
             }
 
         }
@@ -187,11 +198,20 @@ namespace Flappy_Bird
         {
             if (e.KeyCode == Keys.Space)
             {
-                gravity = 15;
+                gravity = 13;
             }
         }
 
         void startGame()
+        {
+            scores = new int[3];
+            lives = 3;
+            pipeSpeed = 10;
+            Timer.Start();
+            ActiveForm.Select();
+        }
+
+        void resumeGame()
         {
             Timer.Start();
             ActiveForm.Select();
@@ -212,25 +232,36 @@ namespace Flappy_Bird
             scores[lives] = score;
             score = 0;
             ScoreLabel.Text = $"Score: {score}";
+            int scoresSum = scores.Sum();
             if (lives > 0)
             {
                 DiedLabelFooter.Text = $"You have {lives} lives left.";
-                DiedCurrectScore.Text = $"Current score: {scores.Sum()}";
+                DiedCurrectScore.Text = $"Current score: {scoresSum}";
                 DiedCurrectScore.Visible = true;
                 DiedFinalScore.Visible = false;
                 DiedButtonRevive.Visible = true;
                 DiedMainMenuButton.Visible = false;
                 DiedLeaderBoardButton.Visible = false;
             }
-            else if (score <= 0)
+            else if (lives <= 0)
             {
                 DiedLabelFooter.Text = $"You have no lives left.";
-                DiedFinalScore.Text = $"Final score: {scores.Sum()}";
+                DiedFinalScore.Text = $"Final score: {scoresSum}";
                 DiedCurrectScore.Visible = false;
                 DiedFinalScore.Visible = true;
                 DiedButtonRevive.Visible = false;
                 DiedMainMenuButton.Visible = true;
                 DiedLeaderBoardButton.Visible = true;
+
+                int Top10Place = isInTop10(scoresSum);
+                if (Top10Place <= 10 && Top10Place != -1)
+                {
+                    highScoreReachedpanel.Visible = true;
+                    highScoreReachedpanel.BringToFront();
+                    HighScoreReachedPlace.Text += Top10Place.ToString();
+                    HighScoreReachedScore.Text += scoresSum;
+                    return;
+                }
             }
 
             DiedPanel.BringToFront();
@@ -242,11 +273,33 @@ namespace Flappy_Bird
         {
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Button click to save the highscore and username in the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void saveHighScore(object sender, EventArgs e)
         {
             // HIGH SCORE REACHED NAME INPUT SENDING!!
+            string name = HighScoreReachedName.Text;
+            if (name == "Name here" || name == "")
+            {
+                return;
+            }
+            int scorePoints = scores.Sum();
+            highScoreReachedpanel.Visible = false;
+            highScoreReachedpanel.SendToBack();
+            DiedPanel.BringToFront();
+            DiedPanel.Visible = true;
+            savePoints(name, scorePoints);
         }
 
+
+        /// <summary>
+        /// Revive button for when you've died and still have lives left.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DiedButtonRevive_Click(object sender, EventArgs e)
         {
             // REVIVE BUTTON!!
@@ -258,17 +311,27 @@ namespace Flappy_Bird
             DiedPanel.SendToBack();
             DiedPanel.Visible = false;
             ActiveForm.Select();
-            startGame();
+            resumeGame();
         }
 
+        /// <summary>
+        /// Resets the game.
+        /// </summary>
         private void resetGame()
         {
-            Flappy.Location = flappyLocation;
-            PipeTop.Location = pipeTopLocation;
-            PipeBottom.Location = pipeBottomLocation;
-            collitionBox.Location = collitionBoxLocation;
+            for (int i = 0; i < FlappyGamePanel.Controls.Count; i++)
+            {
+                if (FlappyGamePanel.Controls[i].Tag != null && FlappyGamePanel.Controls[i].Tag.ToString() == "movable")
+                {
+                    FlappyGamePanel.Controls.Remove(FlappyGamePanel.Controls[i]);
+                }
+            }
         }
 
+        /// <summary>
+        /// Creating the top pipe.
+        /// </summary>
+        /// <returns></returns>
         PictureBox CreatePipeTop()
         {
             PictureBox pipe = new PictureBox();
@@ -285,6 +348,10 @@ namespace Flappy_Bird
             return pipe;
         }
 
+        /// <summary>
+        /// Creating the bottom pipe.
+        /// </summary>
+        /// <returns></returns>
         PictureBox CreatePipeBottom()
         {
             PictureBox pipe = new PictureBox();
@@ -293,19 +360,23 @@ namespace Flappy_Bird
             pipe.Image = Properties.Resources.pipe;
             pipe.Location = pipeBottomLocation;
             pipe.Name = "PipeBottom";
-            pipe.Size = new Size(141, 323);
+            pipe.Size = new Size(141, 155);
             pipe.SizeMode = PictureBoxSizeMode.StretchImage;
-            pipe.TabIndex = 3;
+            pipe.TabIndex = 0;
             pipe.TabStop = false;
             pipe.Tag = "movable";
             return pipe;
         }
 
+        /// <summary>
+        /// Creating a collition box.
+        /// </summary>
+        /// <returns></returns>
         PictureBox CreateCollitionBox()
         {
             PictureBox collitionBox = new PictureBox();
             collitionBox.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom);
-            collitionBox.BackColor = Color.White;
+            collitionBox.BackColor = Color.Transparent;
             collitionBox.Location = collitionBoxLocation;
             collitionBox.Name = "collitionBox";
             collitionBox.Size = new Size(10, 512);
@@ -313,6 +384,59 @@ namespace Flappy_Bird
             collitionBox.TabStop = false;
             collitionBox.Tag = "movable";
             return collitionBox;
+        }
+
+        /// <summary>
+        /// Checks if the points fall in the top ten or not
+        /// Gives back the amount the position it's supposed to be at.
+        /// </summary>
+        /// <param name="points">The points it checks for.</param>
+        /// <returns></returns>
+        int isInTop10(int points)
+        {
+            string host = local == false ? "188.166.85.248:5555" : "localhost:5555";
+            RestClient restClient = new RestClient(httpVerb.GET);
+            restClient.endPoint = $"http://{host}/api/v1/stats/calctop/{points}";
+            restClient.host = host;
+            string responseString = restClient.makeRequest();
+            try
+            {
+                IsTopTen response = JsonConvert.DeserializeObject<IsTopTen>(responseString);
+                return response.place;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        /// <summary>
+        /// Saving the score to the database using the API.
+        /// </summary>
+        /// <param name="username">The username of the player</param>
+        /// <param name="points">The score of the player</param>
+        void savePoints(string username, int points)
+        {
+            // Using localhost or the dedi
+            string host = local == false ? "188.166.85.248:5555" : "localhost:5555";
+            RestClient restClient = new RestClient(httpVerb.POST);
+            restClient.endPoint = $"http://{host}/api/v1/stats/{username}/{points}";
+            restClient.host = host;
+            restClient.makeRequest();
+        }
+
+        /// <summary>
+        /// back to main screen panel when you have died 3 times.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DiedMainMenuButton_Click(object sender, EventArgs e)
+        {
+            DiedPanel.Visible = false;
+            DiedPanel.SendToBack();
+            FlappyGamePanel.Visible = false;
+            FlappyGamePanel.SendToBack();
+            Mainscreenpanel.Visible = true;
+            Mainscreenpanel.BringToFront();
         }
     }
 }
