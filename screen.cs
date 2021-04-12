@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Flappy_Bird.api;
 using Newtonsoft.Json;
@@ -15,9 +10,29 @@ namespace Flappy_Bird
     public partial class screen : Form
     {
         private bool local = false;
-        int pipeSpeed = 15;
-        int gravity = 15;
-        int score = 0;
+        static int pipeSpeed = 10;
+        static int gravity = 15;
+        static int score = 0;
+        static int lives = 3;
+        static int ticks = 0;
+        int[] scores = new int[5];
+        Point flappyLocation = Point.Empty;
+        Point pipeTopLocation = Point.Empty;
+        Point pipeBottomLocation = Point.Empty;
+        Point collitionBoxLocation = Point.Empty;
+
+        /**
+         * 
+         * TODO: 
+         * better pipe handling
+         * saving points
+         * fix "air" bug
+         * config
+         * presentation
+         * 
+         */
+
+
         public screen()
         {
             InitializeComponent();
@@ -102,23 +117,61 @@ namespace Flappy_Bird
 
         private void FlappyTimerEvent(object sender, EventArgs e)
         {
-            Flappy.Top += gravity;
-            PipeBottom.Left -= pipeSpeed;
-            PipeTop.Left -= pipeSpeed;
-            ScoreLabel.Text = $"Score: {score}";
-            if (PipeBottom.Left < -150)
+            if (ticks == 50 * 2)
             {
-                PipeBottom.Left = 800;
+                PictureBox top = CreatePipeTop();
+                top.Left = FlappyGamePanel.Right;
+                PictureBox bottom = CreatePipeBottom();
+                bottom.Left = FlappyGamePanel.Right;
+                PictureBox box = CreateCollitionBox();
+                box.Left = FlappyGamePanel.Right;
+                FlappyGamePanel.Controls.Add(top);
+                FlappyGamePanel.Controls.Add(bottom);
+                FlappyGamePanel.Controls.Add(box);
+                Console.WriteLine("Now.");
+                ticks = 0;
             }
-            if (PipeBottom.Left < -180)
+            Flappy.Top += gravity;
+            /*PipeBottom.Left -= pipeSpeed;
+            PipeTop.Left -= pipeSpeed;
+            collitionBox.Left -= pipeSpeed;*/
+            if (flappyLocation == Point.Empty || pipeTopLocation == Point.Empty || pipeBottomLocation == Point.Empty || collitionBoxLocation == Point.Empty)
             {
-                PipeBottom.Left = 950;
+                flappyLocation = Flappy.Location;
+                pipeTopLocation = PipeTop.Location;
+                pipeBottomLocation = PipeBottom.Location;
+                collitionBoxLocation = collitionBox.Location;
+            }
+            Console.WriteLine("Controls length: " + FlappyGamePanel.Controls.Count);
+            for (int i = 0; i < FlappyGamePanel.Controls.Count; i++)
+            {
+                if (FlappyGamePanel.Controls[i].Tag != null && FlappyGamePanel.Controls[i].Tag.ToString() == "movable")
+                {
+                    var pipe = FlappyGamePanel.Controls[i];
+                    FlappyGamePanel.Controls[i].Left -= pipeSpeed;
+
+                    if (pipe.Left < FlappyGamePanel.Left - 150)
+                    {
+                        FlappyGamePanel.Controls.Remove(pipe);
+                    }
+                    if (pipe.Name == "collitionBox" && Flappy.Bounds.IntersectsWith(pipe.Bounds) && pipe.Visible)
+                    {
+                        score++;
+                        ScoreLabel.Text = $"Score: {score}";
+                        pipe.Visible = false;
+                    }
+                    if (pipe.Name != "collitionBox" && Flappy.Bounds.IntersectsWith(pipe.Bounds) || Flappy.Bounds.IntersectsWith(groundPictureBox.Bounds))
+                    {
+                        Console.WriteLine("DIED.");
+                        died();
+                        break;
+                    }
+                }
             }
 
-            if (Flappy.Bounds.IntersectsWith(PipeTop.Bounds) || Flappy.Bounds.IntersectsWith(PipeBottom.Bounds) || Flappy.Bounds.IntersectsWith(groundPictureBox.Bounds))
-            {
-                stopGame();
-            }
+
+
+            ticks++;
         }
 
         private void KeyDownEvent(object sender, KeyEventArgs e)
@@ -141,12 +194,125 @@ namespace Flappy_Bird
         void startGame()
         {
             Timer.Start();
-            Form.ActiveForm.Select();
+            ActiveForm.Select();
         }
 
         void stopGame()
         {
             Timer.Stop();
+            resetGame();
+            Console.WriteLine("STOPPED THE GAME.");
+        }
+
+        void died()
+        {
+            lives -= 1;
+            Timer.Stop();
+            resetGame();
+            scores[lives] = score;
+            score = 0;
+            ScoreLabel.Text = $"Score: {score}";
+            if (lives > 0)
+            {
+                DiedLabelFooter.Text = $"You have {lives} lives left.";
+                DiedCurrectScore.Text = $"Current score: {scores.Sum()}";
+                DiedCurrectScore.Visible = true;
+                DiedFinalScore.Visible = false;
+                DiedButtonRevive.Visible = true;
+                DiedMainMenuButton.Visible = false;
+                DiedLeaderBoardButton.Visible = false;
+            }
+            else if (score <= 0)
+            {
+                DiedLabelFooter.Text = $"You have no lives left.";
+                DiedFinalScore.Text = $"Final score: {scores.Sum()}";
+                DiedCurrectScore.Visible = false;
+                DiedFinalScore.Visible = true;
+                DiedButtonRevive.Visible = false;
+                DiedMainMenuButton.Visible = true;
+                DiedLeaderBoardButton.Visible = true;
+            }
+
+            DiedPanel.BringToFront();
+            DiedPanel.Visible = true;
+
+        }
+
+        private void screen_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // HIGH SCORE REACHED NAME INPUT SENDING!!
+        }
+
+        private void DiedButtonRevive_Click(object sender, EventArgs e)
+        {
+            // REVIVE BUTTON!!
+            if (!DiedPanel.Visible)
+            {
+                return;
+            }
+            //resetGame();
+            DiedPanel.SendToBack();
+            DiedPanel.Visible = false;
+            ActiveForm.Select();
+            startGame();
+        }
+
+        private void resetGame()
+        {
+            Flappy.Location = flappyLocation;
+            PipeTop.Location = pipeTopLocation;
+            PipeBottom.Location = pipeBottomLocation;
+            collitionBox.Location = collitionBoxLocation;
+        }
+
+        PictureBox CreatePipeTop()
+        {
+            PictureBox pipe = new PictureBox();
+            pipe.Anchor = AnchorStyles.Top;
+            pipe.BackColor = Color.Transparent;
+            pipe.Image = Properties.Resources.pipedown;
+            pipe.Location = pipeTopLocation;
+            pipe.Name = "PipeTop";
+            pipe.Size = new Size(141, 321);
+            pipe.SizeMode = PictureBoxSizeMode.StretchImage;
+            pipe.TabIndex = 0;
+            pipe.TabStop = false;
+            pipe.Tag = "movable";
+            return pipe;
+        }
+
+        PictureBox CreatePipeBottom()
+        {
+            PictureBox pipe = new PictureBox();
+            pipe.Anchor = AnchorStyles.Bottom;
+            pipe.BackColor = Color.Transparent;
+            pipe.Image = Properties.Resources.pipe;
+            pipe.Location = pipeBottomLocation;
+            pipe.Name = "PipeBottom";
+            pipe.Size = new Size(141, 323);
+            pipe.SizeMode = PictureBoxSizeMode.StretchImage;
+            pipe.TabIndex = 3;
+            pipe.TabStop = false;
+            pipe.Tag = "movable";
+            return pipe;
+        }
+
+        PictureBox CreateCollitionBox()
+        {
+            PictureBox collitionBox = new PictureBox();
+            collitionBox.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom);
+            collitionBox.BackColor = Color.White;
+            collitionBox.Location = collitionBoxLocation;
+            collitionBox.Name = "collitionBox";
+            collitionBox.Size = new Size(10, 512);
+            collitionBox.TabIndex = 6;
+            collitionBox.TabStop = false;
+            collitionBox.Tag = "movable";
+            return collitionBox;
         }
     }
 }
