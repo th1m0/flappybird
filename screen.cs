@@ -257,7 +257,7 @@ namespace Flappy_Bird
         {
             Timer.Start();
             ActiveForm.Select();
-            // resetting pipe speed to default, if this is not needed remove this line.
+            // resetting pipe speed to default, if this is not needed remove this line 
             pipeSpeed = 10;
         }
 
@@ -365,6 +365,7 @@ namespace Flappy_Bird
             DiedPanel.SendToBack();
             DiedPanel.Visible = false;
             ActiveForm.Select();
+            resetGame();
             resumeGame();
         }
 
