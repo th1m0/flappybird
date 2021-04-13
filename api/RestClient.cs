@@ -10,6 +10,10 @@ namespace Flappy_Bird.api
 {
     /// <summary>
     /// API Rest client will handle all the api calls.
+    /// <param name="text">A link where the request gets send to.</param> 
+    /// <param httpMethod="httpVerb">A http method what gets used.</param> 
+    /// <param host="text">What the host is.</param> 
+    /// <param headers="text[]">The request headers.</param> 
     /// </summary>
     class RestClient
     {
@@ -68,7 +72,9 @@ namespace Flappy_Bird.api
         }
     }
 
-
+    /// <summary>
+    /// Http methods.
+    /// </summary>
     public enum httpVerb
     {
         GET,

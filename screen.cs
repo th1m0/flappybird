@@ -9,6 +9,9 @@ namespace Flappy_Bird
 {
     public partial class screen : Form
     {
+        /// <summary>
+        /// Configuration of the app.
+        /// </summary>
         private bool local = true;
         static int pipeSpeed = 10;
         static int gravity = 13;
@@ -22,15 +25,9 @@ namespace Flappy_Bird
         Point pipeBottomLocation = Point.Empty;
         Point collitionBoxLocation = Point.Empty;
 
-        /**
-         * 
-         * TODO: 
-         * 
-         * presentation
-         * 
-         */
-
-
+        /// <summary>
+        /// Constructer of the app. This will get runned when the app starts.
+        /// </summary>
         public screen()
         {
             InitializeComponent();
@@ -39,6 +36,11 @@ namespace Flappy_Bird
             KeyPreview = true;
         }
 
+        /// <summary>
+        /// Creates a text box for the leaderboard.
+        /// </summary>
+        /// <param name="text">the text that will display in the text box.</param>
+        /// <returns></returns>
         static TextBox topTenBox(string text)
         {
             TextBox txtBox = new TextBox
@@ -58,6 +60,11 @@ namespace Flappy_Bird
             return txtBox;
         }
 
+        /// <summary>
+        /// Start button. This will start the app.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartButton_Click(object sender, EventArgs e)
         {
             // HOME SCREEN START BUTTON CLICK EVENT
@@ -70,6 +77,11 @@ namespace Flappy_Bird
             startGame();
         }
 
+        /// <summary>
+        /// This will show the leaderboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void showLeaderBoard(object sender, EventArgs e)
         {
             // HOME SCREEN LEADERBOARD BUTTON CLICK EVENT
@@ -89,6 +101,11 @@ namespace Flappy_Bird
 
         }
 
+        /// <summary>
+        /// This will call the api and update the leaderboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeaderBoardPanel_VisibleChanged(object sender, EventArgs e)
         {
             if (LeaderBoardPanel.Visible == false)
@@ -108,6 +125,11 @@ namespace Flappy_Bird
             }
         }
 
+        /// <summary>
+        /// This will send you back to the main screen from the leaderboard screen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TopTenBackButton_Click(object sender, EventArgs e)
         {
             // TOPTEN BACK BUTTON
@@ -118,6 +140,11 @@ namespace Flappy_Bird
             LeaderBoardPanel.SendToBack();
         }
 
+        /// <summary>
+        /// This will run every 20ms and will handle everything movable on the screen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FlappyTimerEvent(object sender, EventArgs e)
         {
             if (ticks >= 50 * 2 * 5 / (pipeSpeed / 2))
@@ -183,6 +210,11 @@ namespace Flappy_Bird
             ticks++;
         }
 
+        /// <summary>
+        /// This will be runned every time a key gets pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void KeyDownEvent(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
@@ -192,6 +224,11 @@ namespace Flappy_Bird
 
         }
 
+        /// <summary>
+        /// this will be runned every time a key gets released.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void KeyUpEvent(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
@@ -200,6 +237,9 @@ namespace Flappy_Bird
             }
         }
 
+        /// <summary>
+        /// Starts the flappy game.
+        /// </summary>
         void startGame()
         {
             scores = new int[3];
@@ -209,18 +249,27 @@ namespace Flappy_Bird
             ActiveForm.Select();
         }
 
+        /// <summary>
+        /// This will resume the game after being dead and still having lives left.
+        /// </summary>
         void resumeGame()
         {
             Timer.Start();
             ActiveForm.Select();
         }
 
+        /// <summary>
+        /// this will stop the game from runnning.
+        /// </summary>
         void stopGame()
         {
             Timer.Stop();
             resetGame();
         }
 
+        /// <summary>
+        /// This will handle everything when you died.
+        /// </summary>
         void died()
         {
             lives -= 1;
@@ -266,6 +315,11 @@ namespace Flappy_Bird
 
         }
 
+        /// <summary>
+        /// this will do nothing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void screen_Paint(object sender, PaintEventArgs e)
         {
         }

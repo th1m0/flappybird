@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Flappy_Bird.api
 {
+    /// <summary>
+    /// Deserialize the TopTen from the api response into an array.
+    /// Used for the leaderboard.
+    /// </summary>
     class TopTen
     {
         public string username { get; set; }
@@ -13,12 +17,19 @@ namespace Flappy_Bird.api
         public DateTime insertedDate { get; set; }
     }
 
+    /// <summary>
+    /// Deserialize the data from the api response.
+    /// </summary>
     class Data
     {
         public int amount { get; set; }
         public List<TopTen> data { get; set; }
     }
 
+    /// <summary>
+    /// Deserialize the data from the api. Checking if it's in the top ten or not
+    /// Getting back the position it should be placed at.
+    /// </summary>
     class IsTopTen
     {
         public int success { get; set; }
