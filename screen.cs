@@ -9,7 +9,7 @@ namespace Flappy_Bird
 {
     public partial class screen : Form
     {
-        private bool local = false;
+        private bool local = true;
         static int pipeSpeed = 10;
         static int gravity = 13;
         static int score = 0;
@@ -91,7 +91,6 @@ namespace Flappy_Bird
 
         private void LeaderBoardPanel_VisibleChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(LeaderBoardPanel.Visible);
             if (LeaderBoardPanel.Visible == false)
             {
                 return;
@@ -128,16 +127,16 @@ namespace Flappy_Bird
                 PictureBox bottom = CreatePipeBottom();
                 bottom.Left = FlappyGamePanel.Right;
                 PictureBox box = CreateCollitionBox();
-                box.Left = FlappyGamePanel.Right + 100;
+                box.Left = FlappyGamePanel.Right + 50;
                 box.Height = FlappyGamePanel.Height;
-                top.Height = new Random().Next(top.Height, (box.Height / 2) + 1 - 100);
+                int minValueTop = (box.Height / 2) + 1 - 50;
+                top.Height = new Random().Next(top.Height, minValueTop);
                 int bottomHeightInc = new Random().Next(bottom.Height, (box.Height / 2) + 1 - 150) - bottom.Height;
                 bottom.Height = bottomHeightInc + bottom.Height;
                 bottom.Location = new Point(bottom.Location.X, bottom.Location.Y - bottomHeightInc);
                 FlappyGamePanel.Controls.Add(top);
                 FlappyGamePanel.Controls.Add(bottom);
                 FlappyGamePanel.Controls.Add(box);
-                Console.WriteLine("Now. Location bottom pipe: " + bottom.Location.Y + " " + bottom.Location.X + " inc: " + bottomHeightInc);
                 ticks = 0;
             }
             Flappy.Top += gravity;
@@ -173,7 +172,6 @@ namespace Flappy_Bird
                     }
                     if (pipe.Name != "collitionBox" && Flappy.Bounds.IntersectsWith(pipe.Bounds) || Flappy.Bounds.IntersectsWith(groundPictureBox.Bounds) || Flappy.Bounds.IntersectsWith(AirPictureBox.Bounds))
                     {
-                        Console.WriteLine("DIED.");
                         died();
                         break;
                     }
@@ -221,7 +219,6 @@ namespace Flappy_Bird
         {
             Timer.Stop();
             resetGame();
-            Console.WriteLine("STOPPED THE GAME.");
         }
 
         void died()
