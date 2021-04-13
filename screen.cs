@@ -158,7 +158,7 @@ namespace Flappy_Bird
                 box.Height = FlappyGamePanel.Height;
                 //TODO 50 should be a calculated value for different screen sizes.
                 top.Height = new Random().Next(top.Height, (box.Height / 2) + 1 - 50);
-                //TODO 50 should be a calculated value for different screen sizes.
+                //TODO 150 should be a calculated value for different screen sizes.
                 int bottomHeightInc = new Random().Next(bottom.Height, (box.Height / 2) + 1 - 150) - bottom.Height;
                 bottom.Height = bottomHeightInc + bottom.Height;
                 bottom.Location = new Point(bottom.Location.X, bottom.Location.Y - bottomHeightInc);
