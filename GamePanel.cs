@@ -7,6 +7,10 @@ using System.Windows.Forms;
 
 namespace Flappy_Bird
 {
+    /// <summary>
+    /// Extended Panel to use OptimezedDoubleBuffer
+    /// to remove glitches when flappy moves.
+    /// </summary>
     class GamePanel : Panel
     {
         public GamePanel()
