@@ -156,8 +156,9 @@ namespace Flappy_Bird
                 PictureBox box = CreateCollitionBox();
                 box.Left = FlappyGamePanel.Right + 50;
                 box.Height = FlappyGamePanel.Height;
-                int minValueTop = (box.Height / 2) + 1 - 50;
-                top.Height = new Random().Next(top.Height, minValueTop);
+                //TODO 50 should be a calculated value for different screen sizes.
+                top.Height = new Random().Next(top.Height, (box.Height / 2) + 1 - 50);
+                //TODO 50 should be a calculated value for different screen sizes.
                 int bottomHeightInc = new Random().Next(bottom.Height, (box.Height / 2) + 1 - 150) - bottom.Height;
                 bottom.Height = bottomHeightInc + bottom.Height;
                 bottom.Location = new Point(bottom.Location.X, bottom.Location.Y - bottomHeightInc);
